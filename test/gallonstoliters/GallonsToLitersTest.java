@@ -5,7 +5,7 @@
  */
 
 package gallonstoliters;
-
+import java.util.*;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -22,7 +22,6 @@ public class GallonsToLitersTest {
     
     /**
      * Test of main method, of class GallonsToLiters.
-     
     @Test
     public void testMain() {
         System.out.println("main");
@@ -36,10 +35,31 @@ public class GallonsToLitersTest {
      * Test of Convert method, of class GallonsToLiters.
      */
     @Test
-    public void GallonsToLiters_IsComputationCorrect_ReturnsTrue() {
+    public void GallonsToLiters_IsComputationCorrect_ReturnsValue() {
         System.out.println("GallonsToLiters: Convert()");
         assertEquals(37.854, GallonsToLiters.Convert(10), 0.0);
        
     }
+    @Test
+    public void LiquidConverterSingleton_IsConstructionValid_ReturnsInstance(){
+        LiquidConverterSingleton converter = LiquidConverterSingleton.getInstance();
+        assertTrue(converter instanceof LiquidConverterSingleton);
+    }
+    @Test
+    public void LiquidConverterSingleton_DoesFillListWithValuesWork_ReturnsListSize(){
+        LiquidConverterSingleton converter = LiquidConverterSingleton.getInstance();
+        List<Double> myvalues = converter.GetValues();
+        assertTrue(myvalues.size() > 10);
+    }
     
+    @Test
+    public void LiquidConverterSingleton_DoesConvertListWork_ReturnsComputedList(){
+        LiquidConverterSingleton converter = LiquidConverterSingleton.getInstance();
+        List<Double> myvalues = converter.GetValues();
+        List<Double> myConvertedValues = converter.GetConvertedList();
+        for(int i=1; i<24; i++){
+            System.out.println(myConvertedValues.get(i) + " liters = " + myvalues.get(i) + " gallons.");
+            assertTrue(myConvertedValues.get(i) == myvalues.get(i) * 3.7854);
+        }
+    }
 }
